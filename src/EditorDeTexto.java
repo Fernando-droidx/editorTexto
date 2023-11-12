@@ -5,6 +5,12 @@ import javax.swing.text.Highlighter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
 
 public class EditorDeTexto extends JFrame implements ActionListener {
     private final JTextArea areaTexto;
@@ -35,12 +41,15 @@ public class EditorDeTexto extends JFrame implements ActionListener {
         JMenuItem guardarItem = new JMenuItem("Guardar");
         JMenuItem guardarComoItem = new JMenuItem("Guardar como");
         JMenuItem cerrarItem = new JMenuItem("Cerrar");
+        
 
         archivoMenu.add(nuevoItem);
         archivoMenu.add(abrirItem);
         archivoMenu.add(guardarItem);
         archivoMenu.add(guardarComoItem);
         archivoMenu.add(cerrarItem);
+        
+        
 
         JMenu edicionMenu = new JMenu("Edición");
         JMenuItem buscarItem = new JMenuItem("Buscar");
@@ -48,12 +57,15 @@ public class EditorDeTexto extends JFrame implements ActionListener {
         JMenuItem copiarItem = new JMenuItem("Copiar");
         JMenuItem cortarItem = new JMenuItem("Cortar");
         JMenuItem pegarItem = new JMenuItem("Pegar");
+        JMenuItem analizarItem = new JMenuItem("Analizar");
+
 
         edicionMenu.add(buscarItem);
         edicionMenu.add(reemplazarItem);
         edicionMenu.add(copiarItem);
         edicionMenu.add(cortarItem);
         edicionMenu.add(pegarItem);
+        edicionMenu.add(analizarItem);
 
         JMenuItem cambiarModoItem = new JMenuItem("Cambiar Modo");
         archivoMenu.add(cambiarModoItem);
@@ -75,6 +87,7 @@ public class EditorDeTexto extends JFrame implements ActionListener {
         copiarItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
         cortarItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK));
         pegarItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK));
+        analizarItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK));
 
         nuevoItem.addActionListener(this);
         abrirItem.addActionListener(this);
@@ -87,7 +100,7 @@ public class EditorDeTexto extends JFrame implements ActionListener {
         copiarItem.addActionListener(this);
         cortarItem.addActionListener(this);
         pegarItem.addActionListener(this);
-
+        analizarItem.addActionListener(this);
         cambiarModoItem.addActionListener(this);
 
         fileChooser = new JFileChooser();
@@ -193,6 +206,10 @@ public class EditorDeTexto extends JFrame implements ActionListener {
                 areaTexto.paste();
                 break;
 
+            case "Analizar":
+                analizarTexto();
+                break;
+
             case "Cambiar Modo":
                 alternarModo();
                 break;
@@ -275,6 +292,28 @@ public class EditorDeTexto extends JFrame implements ActionListener {
             }
         }
     }
+
+    private void analizarTexto() {
+        System.out.println("Analizando texto"); 
+        String codigo = areaTexto.getText();
+        AnalizadorLexico analizador = new AnalizadorLexico();
+        ArrayList<Token> tokens = analizador.analizarCodigo(codigo);
+    
+        if (!tokens.isEmpty()) {
+            StringBuilder resultados = new StringBuilder();
+            
+            for (Token token : tokens) {
+            System.out.println("Tipo: " + token.getTipo() + ", Valor: " + token.getValor()); // Mensaje de depuración
+            resultados.append("Tipo: ").append(token.getTipo()).append(", Valor: ").append(token.getValor()).append("\n");
+        }
+        JOptionPane.showMessageDialog(this, resultados.toString(), "Resultados del análisis léxico", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            System.out.println("La lista de tokens está vacía."); // Mensaje de depuración
+        }
+        
+        
+    }
+    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(EditorDeTexto::new);
