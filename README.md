@@ -9,8 +9,28 @@ Este proyecto es un editor de texto simple desarrollado en Java con interfaz gr�
 - Operaciones de edición: Copiar, Cortar, Pegar.
 - Búsqueda y reemplazo de texto con resaltado de resultados.
 - Modo oscuro y modo claro para la interfaz.
+- Analizar palabras reservadas 
 
-## Capturas de Pantalla
+
+## Análisis Léxico
+
+El editor de texto incluye una función de análisis léxico que te permite realizar un escaneo del código fuente ingresado en el editor. Este análisis léxico identifica y clasifica diferentes elementos léxicos, como palabras clave, identificadores y símbolos.
+
+## Cómo utilizar el Análisis Léxico
+
+1. Abre el editor de texto.
+2. Escribe o pega el código fuente en el área de texto.
+3. Selecciona la opción "Analizar" desde el menú de "Edición" o usa el atajo de teclado asociado.
+4. Se mostrará una ventana emergente con los resultados del análisis léxico.
+
+## Resultados del Análisis Léxico
+
+Los resultados incluirán información sobre cada token encontrado en el código, incluyendo el tipo y el valor. Los tipos de tokens pueden incluir palabras clave, identificadores o símbolos, entre otros.
+
+Este análisis léxico es útil para comprender la estructura básica del código y puede ser una herramienta valiosa durante el desarrollo de programas.
+
+
+
 
 ![Captura de pantalla 1](screenshots/screenshot1.png)
 *Interfaz del Editor de Texto en modo oscuro*
